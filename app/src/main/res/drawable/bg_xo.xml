@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- res/drawable/square_top_left_border.xml -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- Nền trắng (hoặc trong suốt) -->
-    <item>
+
+    <!-- Lớp nền (background chính) -->
+    <item android:width="94.67dp"
+        android:height="94.67dp">
+          android:top="4dp"
+          android:bottom="4dp"
+          android:left="4dp"
+          android:right="4dp">
         <shape android:shape="rectangle">
-            <solid android:color="#FFFFFF" />
+            <solid android:color="#000000"/> <!-- Màu nền trắng -->
         </shape>
     </item>
 
-    <!-- Viền trái -->
-    <item android:left="94.67dp" android:right="0dp">
+    <!-- Lớp viền trong (inner border) -->
+    <item android:top="2dp" android:bottom="0dp" android:left="0dp" android:right="2dp">
         <shape android:shape="rectangle">
-            <size android:width="4dp" />
-            <solid android:color="#000000" />
+            <solid android:color="#FFFFFF"/> <!-- Màu viền đen -->
         </shape>
     </item>
 
-    <!-- Viền trên -->
-    <item android:top="0dp" android:bottom="94.67dp">
-        <shape android:shape="rectangle">
-            <size android:height="4dp" />
-            <solid android:color="#000000" />
-        </shape>
-    </item>
 </layer-list>
+
 
