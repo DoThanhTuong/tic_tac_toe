@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <ImageButton
-        android:id="@+id/bt_menu"
+        android:id="@+id/bt_Exit"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_marginStart="32dp"
@@ -20,14 +20,14 @@
         tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageButton
-        android:id="@+id/bt_exMark"
+        android:id="@+id/bt_Paused"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_marginTop="24dp"
         android:src="@drawable/exmark"
-        app:layout_constraintEnd_toEndOf="@+id/bt_menu"
-        app:layout_constraintStart_toStartOf="@+id/bt_menu"
-        app:layout_constraintTop_toBottomOf="@+id/bt_menu"
+        app:layout_constraintEnd_toEndOf="@+id/bt_Exit"
+        app:layout_constraintStart_toStartOf="@+id/bt_Exit"
+        app:layout_constraintTop_toBottomOf="@+id/bt_Exit"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
@@ -83,13 +83,13 @@
         android:gravity="center"
         android:text="Select Mode"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/tv_Single"
+        app:layout_constraintEnd_toEndOf="@+id/tv_Single"
+        app:layout_constraintStart_toStartOf="@+id/tv_Single"
         tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/tv_Single"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -101,13 +101,13 @@
         android:text="Single Player"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintEnd_toEndOf="@+id/textView3"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintBottom_toTopOf="@+id/tv_PlayWithAF"
+        app:layout_constraintEnd_toEndOf="@+id/tv_PlayWithAF"
+        app:layout_constraintStart_toStartOf="@+id/tv_PlayWithAF"
         tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_PlayWithAF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

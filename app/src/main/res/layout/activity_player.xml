@@ -7,7 +7,7 @@
     android:background="#ECECEC">
 
     <ImageButton
-        android:id="@+id/bt_menu"
+        android:id="@+id/bt_Exit"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_marginStart="24dp"
@@ -18,13 +18,13 @@
         tools:ignore="ContentDescription,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <ImageButton
-        android:id="@+id/bt_exMark"
+        android:id="@+id/bt_Paused"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_marginTop="24dp"
         android:src="@drawable/play"
-        app:layout_constraintStart_toStartOf="@+id/bt_menu"
-        app:layout_constraintTop_toBottomOf="@+id/bt_menu"
+        app:layout_constraintStart_toStartOf="@+id/bt_Exit"
+        app:layout_constraintTop_toBottomOf="@+id/bt_Exit"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <!--    avt -->
@@ -53,6 +53,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginBottom="-4dp"
+        android:alpha="0.5"
         android:src="@drawable/player1"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/btn_1"
@@ -99,7 +100,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_menu"
+        app:layout_constraintTop_toBottomOf="@+id/bt_Exit"
         tools:ignore="ContentDescription" />
 
     <ImageButton
@@ -107,7 +108,6 @@
         android:layout_width="94.67dp"
         android:layout_height="94.67dp"
         android:background="@drawable/bg_xo"
-        android:src="@drawable/o"
         app:layout_constraintBottom_toBottomOf="@+id/btn_6"
         app:layout_constraintEnd_toStartOf="@+id/btn_6"
         app:layout_constraintTop_toBottomOf="@+id/btn_2"
@@ -118,7 +118,6 @@
         android:layout_width="94.67dp"
         android:layout_height="94.67dp"
         android:background="@drawable/bg_xo"
-        android:src="@drawable/o"
         app:layout_constraintBottom_toBottomOf="@+id/btn_3"
         app:layout_constraintEnd_toStartOf="@+id/btn_3"
         app:layout_constraintTop_toTopOf="@+id/imageView"
@@ -129,7 +128,6 @@
         android:layout_width="94.67dp"
         android:layout_height="94.67dp"
         android:background="@drawable/bg_xo"
-        android:src="@drawable/o"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
@@ -139,7 +137,6 @@
         android:layout_width="94.67dp"
         android:layout_height="94.67dp"
         android:background="@drawable/bg_xo"
-        android:src="@drawable/o"
         app:layout_constraintBottom_toTopOf="@+id/btn_5"
         app:layout_constraintEnd_toStartOf="@+id/btn_2"
         app:layout_constraintTop_toTopOf="@+id/btn_3"
@@ -150,7 +147,6 @@
         android:layout_width="94.67dp"
         android:layout_height="94.67dp"
         android:background="@drawable/bg_xo"
-        android:src="@drawable/o"
         app:layout_constraintBottom_toBottomOf="@+id/btn_5"
         app:layout_constraintEnd_toStartOf="@+id/btn_5"
         app:layout_constraintTop_toBottomOf="@+id/btn_1"
@@ -161,7 +157,7 @@
         android:layout_width="94.67dp"
         android:layout_height="94.67dp"
         android:background="@drawable/bg_xo"
-        android:src="@drawable/o"
+
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/btn_3"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
@@ -171,7 +167,7 @@
         android:layout_width="94.67dp"
         android:layout_height="94.67dp"
         android:background="@drawable/bg_xo"
-        android:src="@drawable/o"
+
         app:layout_constraintBottom_toBottomOf="@+id/btn_9"
         app:layout_constraintEnd_toEndOf="@+id/btn_5"
         app:layout_constraintStart_toStartOf="@+id/btn_5"
@@ -183,7 +179,6 @@
         android:layout_width="94.67dp"
         android:layout_height="94.67dp"
         android:background="@drawable/bg_xo"
-        android:src="@drawable/o"
         app:layout_constraintBottom_toBottomOf="@+id/btn_8"
         app:layout_constraintEnd_toStartOf="@+id/btn_8"
         app:layout_constraintTop_toBottomOf="@+id/btn_4"
@@ -194,16 +189,14 @@
         android:layout_width="94.67dp"
         android:layout_height="94.67dp"
         android:background="@drawable/bg_xo"
-        android:src="@drawable/o"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/btn_5"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/iv_player"
         android:layout_width="28dp"
         android:layout_height="46dp"
-        android:src="@drawable/o"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -221,13 +214,33 @@
         android:maxLines="1"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:text="Player 1"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/iv_player"
         tools:ignore="HardcodedText" />
+
+    <com.example.tic_tac_toe.WinlostAcitivity
+        android:id="@+id/winlost_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+    <com.example.tic_tac_toe.PausedAcitivity
+        android:id="@+id/paused_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,7 @@
     android:background="#ECECEC">
 
     <ImageButton
-        android:id="@+id/bt_menu"
+        android:id="@+id/bt_Exit"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_marginStart="24dp"
@@ -18,13 +18,13 @@
         tools:ignore="ContentDescription,TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
     <ImageButton
-        android:id="@+id/bt_exMark"
+        android:id="@+id/bt_Paused"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_marginTop="24dp"
         android:src="@drawable/play"
-        app:layout_constraintStart_toStartOf="@+id/bt_menu"
-        app:layout_constraintTop_toBottomOf="@+id/bt_menu"
+        app:layout_constraintStart_toStartOf="@+id/bt_Exit"
+        app:layout_constraintTop_toBottomOf="@+id/bt_Exit"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <!--    avt -->
