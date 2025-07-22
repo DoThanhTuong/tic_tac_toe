@@ -1,17 +1,15 @@
 package com.example.tic_tac_toe;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.tic_tac_toe.databinding.ActivityMainBinding;
+
+import java.util.function.Consumer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,15 +22,36 @@ public class MainActivity extends AppCompatActivity {
         viewBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(viewBinding.getRoot());
 
-        onClickWithFen();
+
+
+        onClickMode(mode -> {
+            if (mode == 1) {
+                onClickWithFen(mode);
+            } else if (mode == 2) {
+                onClickWithFen(mode);
+            }
+        });
+
+
 
 
 
     }
-    public void onClickWithFen () {
+    public void onClickMode(Consumer<Integer> callback) {
+        viewBinding.btMode.setOnClickListener(v -> {
+            new AlertDialog.Builder(this)
+                    .setTitle("Mode")
+                    .setMessage("Chọn chế độ chơi:")
+                    .setPositiveButton("chơi với máy", (dialog, which) -> callback.accept(1))
+                    .setNegativeButton("chơi với người", (dialog, which) -> callback.accept(2))
+                    .setNeutralButton("Hủy", null)
+                    .show();
+        });
+    }
+    public void onClickWithFen (Integer mode) {
         viewBinding.tvPlayWithAF.setOnClickListener(v-> {;
             Intent intentMain = new Intent(MainActivity.this, PlayerAcitivity.class);
-
+            intentMain.putExtra("mode", mode);
             startActivityForResult(intentMain, 123);
         });
     }

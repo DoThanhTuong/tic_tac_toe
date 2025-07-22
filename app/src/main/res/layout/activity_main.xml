@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <ImageButton
-        android:id="@+id/bt_Exit"
+        android:id="@+id/bt_Mode"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_marginStart="24dp"
@@ -20,14 +20,14 @@
         tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <ImageButton
-        android:id="@+id/bt_Paused"
+        android:id="@+id/bt_Exmark"
         android:layout_width="38dp"
         android:layout_height="38dp"
         android:layout_marginTop="24dp"
         android:src="@drawable/exmark"
-        app:layout_constraintEnd_toEndOf="@+id/bt_Exit"
-        app:layout_constraintStart_toStartOf="@+id/bt_Exit"
-        app:layout_constraintTop_toBottomOf="@+id/bt_Exit"
+        app:layout_constraintEnd_toEndOf="@+id/bt_Mode"
+        app:layout_constraintStart_toStartOf="@+id/bt_Mode"
+        app:layout_constraintTop_toBottomOf="@+id/bt_Mode"
         tools:ignore="ContentDescription,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
@@ -54,7 +54,7 @@
         app:layout_constraintBottom_toTopOf="@+id/tv_mode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_Exit"
+        app:layout_constraintTop_toBottomOf="@+id/bt_Mode"
         tools:ignore="HardcodedText" />
 
     <TextView
