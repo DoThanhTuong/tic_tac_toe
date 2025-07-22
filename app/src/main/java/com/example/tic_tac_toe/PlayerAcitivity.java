@@ -33,23 +33,24 @@ public class PlayerAcitivity extends AppCompatActivity {
         viewBinding = ActivityPlayerBinding.inflate(getLayoutInflater());
         setContentView(viewBinding.getRoot());
 
+        // Khởi tạo người chơi
+        player1 = new Player("player 1", 'x');
+        player2 = new Player("player 2", 'o');
+        aI_Player = new AI_Player();
+
         int mode = getIntent().getIntExtra("mode", 0);
         if (mode == 1) {
-            aI_Player = new AI_Player();
             aI_Human = aI_Player; // AI sẽ chơi với người
         } else if (mode == 2) {
-            player2 = new Player("player 2", 'o'); // Người chơi thứ hai
             aI_Human = player2;
         } else {
-            player2 = new Player("player 2", 'o'); // Người chơi thứ hai
-            aI_Human = player2;
+            Toast.makeText(this, "Chế độ không hợp lệ!", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
         // Khởi tạo board và nút
         board = createBoard();
         setupButtonGrid();
-
-        // Khởi tạo người chơi
-        player1 = new Player("player 1", 'x');
 
         currentPlayer = player1;
         updateCurrentPlayerUI();
