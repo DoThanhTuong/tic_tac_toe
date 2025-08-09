@@ -63,4 +63,6 @@ public class WinlostAcitivity extends LinearLayout {
         }
     }
 
+
+
 }

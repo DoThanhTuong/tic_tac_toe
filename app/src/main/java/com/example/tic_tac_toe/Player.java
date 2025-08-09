@@ -3,24 +3,23 @@ package com.example.tic_tac_toe;
 public class Player {
     protected String name;
     protected char symbol; // X or O
-    int score;
-    final int M = 3; // Number of rows
-    final int N = 3; // Number of columns
-    boolean isTurn; // true if it's this player's turn
-    boolean isAI; // true if this player is an AI
-    boolean isWinner; // true if this player has won the game
-    boolean isDraw; // true if the game is a draw for this player
-    boolean isGameOver; // true if the game is over for this player
+
+    protected final int M = 3; // Number of rows
+    protected final int N = 3; // Number of columns
+
+    protected boolean isWinner;
+    protected boolean isDraw;
+
+    protected boolean isLose;
+
 
     public Player(String name, char symbol) {
         this.name = name;
         this.symbol = symbol;
-        this.score = 0;
-        this.isTurn = false;
-        this.isAI = false;
         this.isWinner = false;
         this.isDraw = false;
-        this.isGameOver = false;
+        this.isLose = false;
+
     }
     public String getName() {
         return name;
@@ -36,51 +35,44 @@ public class Player {
         this.symbol = symbol;
     }
 
-    public int getScore() {
-        return score;
-    }
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public boolean isTurn() {
-        return isTurn;
-    }
-    public void setTurn(boolean isTurn) {
-        this.isTurn = isTurn;
+    public boolean checkWin(char[][] b, char player) {
+        for (int i = 0; i < M; i++) {
+            if (b[i][0] == player && b[i][1] == player && b[i][2] == player) return true;
+        }
+        for (int j = 0; j < N; j++) {
+            if (b[0][j] == player && b[1][j] == player && b[2][j] == player) return true;
+        }
+        return (b[0][0] == player && b[1][1] == player && b[2][2] == player) ||
+                (b[0][2] == player && b[1][1] == player && b[2][0] == player);
     }
 
-    public boolean isAI() {
-        return isAI;
-    }
-    public void setAI(boolean isAI) {
-        this.isAI = isAI;
+    public boolean checkDraw(char[][] b) {
+        for (int i = 0; i < M; i++)
+            for (int j = 0; j < N; j++)
+                if (b[i][j] == ' ') return false;
+        return true;
     }
 
-    public boolean isWinner(boolean b) {
-
+    public void setWinner (boolean winner) {
+        isWinner = winner;
+    }
+    public boolean isWinner() {
         return isWinner;
     }
-    public void setWinner(boolean isWinner) {
-        if (isWinner) {
-            this.score++;
-        }
-        this.isWinner = isWinner;
+    public void setDraw (boolean draw) {
+        isDraw = draw;
     }
-
-    public boolean isDraw(boolean b) {
+    public boolean isDraw() {
         return isDraw;
     }
-    public void setDraw(boolean isDraw) {
-        this.isDraw = isDraw;
+    public void setLose (boolean lose) {
+        isLose = lose;
+    }
+    public boolean isLose() {
+        return isLose;
     }
 
-    public boolean isGameOver(boolean b) {
-        return isGameOver;
-    }
-    public void setGameOver(boolean isGameOver) {
-        this.isGameOver = isGameOver;
-    }
+
 
 
 

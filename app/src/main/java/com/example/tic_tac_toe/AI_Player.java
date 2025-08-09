@@ -8,15 +8,16 @@ public class AI_Player extends Player {
 
     int row, col;
 
-    private final int M = 3;
-    private final int N = 3;
     private  char AI = 'o';
     private final char HUMAN = 'x';
 
     private char[][] board;
 
+
+
     public AI_Player() {
         super("AI Player", 'o');
+
     }
 
     public void updateBoard(char[][] newBoard) {
@@ -29,24 +30,6 @@ public class AI_Player extends Player {
             row = r;
             col = c;
         }
-    }
-
-    private boolean checkWin(char[][] b, char player) {
-        for (int i = 0; i < M; i++) {
-            if (b[i][0] == player && b[i][1] == player && b[i][2] == player) return true;
-        }
-        for (int j = 0; j < N; j++) {
-            if (b[0][j] == player && b[1][j] == player && b[2][j] == player) return true;
-        }
-        return (b[0][0] == player && b[1][1] == player && b[2][2] == player) ||
-                (b[0][2] == player && b[1][1] == player && b[2][0] == player);
-    }
-
-    private boolean checkDraw(char[][] b) {
-        for (int i = 0; i < M; i++)
-            for (int j = 0; j < N; j++)
-                if (b[i][j] == ' ') return false;
-        return true;
     }
 
     private ArrayList<Move> getEmptyCells(char[][] b) {
@@ -126,6 +109,17 @@ public class AI_Player extends Player {
     }
     public int getCol() {
         return col;
+    }
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof AI_Player)) return false;
+        AI_Player other = (AI_Player) obj;
+        return this.getName().equals(other.getName()) && this.getSymbol() == other.getSymbol();
     }
 
 }

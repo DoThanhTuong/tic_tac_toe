@@ -21,9 +21,9 @@ public class PlayerAcitivity extends AppCompatActivity {
     final int M = 3, N = 3;
     char[][] board;
 
-    Player player1, player2;
+    Human_Player player1, player2;
     AI_Player aI_Player;
-    Player currentPlayer, aI_Human;
+    Player currentPlayer, currentPlayerAI0rHuman;
 
     ImageButton[][] buttons;
 
@@ -34,20 +34,14 @@ public class PlayerAcitivity extends AppCompatActivity {
         setContentView(viewBinding.getRoot());
 
         // Khởi tạo người chơi
-        player1 = new Player("player 1", 'x');
-        player2 = new Player("player 2", 'o');
+        player1 = new Human_Player("Tuong", 'x');
+
+        player2 = new Human_Player("Khang", 'o');
         aI_Player = new AI_Player();
 
         int mode = getIntent().getIntExtra("mode", 0);
-        if (mode == 1) {
-            aI_Human = aI_Player; // AI sẽ chơi với người
-        } else if (mode == 2) {
-            aI_Human = player2;
-        } else {
-            Toast.makeText(this, "Chế độ không hợp lệ!", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
+        setUpMode(mode);
+
         // Khởi tạo board và nút
         board = createBoard();
         setupButtonGrid();
@@ -58,6 +52,20 @@ public class PlayerAcitivity extends AppCompatActivity {
         setListeners();
         onClickPausedGame();
         onClickExit();
+
+    }
+    private void setUpMode(int mode) {
+        viewBinding.tvPlayer1.setText(player1.name);
+        if (mode == 1) {
+            currentPlayerAI0rHuman = aI_Player; // AI sẽ chơi với người
+            viewBinding.tvPlayer2.setText("AI Player");
+        } else if (mode == 2) {
+            currentPlayerAI0rHuman = player2;
+            viewBinding.tvPlayer2.setText(player2.name);
+        } else {
+            Toast.makeText(this, "Chế độ không hợp lệ!", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     private void setupButtonGrid() {
@@ -107,24 +115,86 @@ public class PlayerAcitivity extends AppCompatActivity {
             return;
         }
 
+        // Đánh dấu nước đi
         board[row][col] = currentPlayer.symbol;
         showSymbol(currentPlayer, btn);
         updateAvatars();
 
-        if (checkWin(board, currentPlayer.symbol)) {
-            currentPlayer.setWinner(true);
-            String winnerName = (currentPlayer == aI_Player ? " DEFEAT! " : currentPlayer.name + " WIN! " + currentPlayer.score);
-            infoWinLoss(winnerName, currentPlayer != aI_Player);
-            startGameWithDelay();
-        } else if (checkDraw(board)) {
-            currentPlayer.setDraw(true);
-            infoWinLoss("Hòa!", true);
-            startGameWithDelay();
-        } else {
-            currentPlayer = (currentPlayer == player1) ? aI_Human : player1;
-            if (currentPlayer == aI_Player) playAI();
+        // Kiểm tra trạng thái game
+        boolean win = checkWin(board, currentPlayer.symbol);
+        boolean draw = checkDraw(board);
+
+        currentPlayer.setWinner(win);
+        currentPlayer.setDraw(draw);
+
+        // Xác định chế độ chơi (vs AI hay vs người)
+        boolean vsAI = (currentPlayerAI0rHuman == aI_Player);
+
+        if (win || draw) {
+            checkWinLoss(vsAI, win, draw);
+            return;
+        }
+
+
+        // Đổi lượt chơi
+        currentPlayer = (currentPlayer == player1) ? currentPlayerAI0rHuman : player1;
+
+        // Nếu AI thì cho AI đánh
+        if (currentPlayer == aI_Player) {
+            playAI();
         }
     }
+    private void checkWinLoss(boolean vsAI, boolean win, boolean draw) {
+        Player opponent = getOpponent(currentPlayer);
+
+        if (win) {
+            if (vsAI) {
+                // Người thắng AI
+                if (!currentPlayer.equals(aI_Player)) {
+                    ((Human_Player) currentPlayer).addScore(3);
+                    infoWinLoss(currentPlayer.name + " WIN! Điểm: " + ((Human_Player) currentPlayer).getScore(), true);
+                }
+                // AI thắng → trừ điểm người chơi
+                else if (opponent instanceof Human_Player) {
+                    ((Human_Player) opponent).addScore(-1);
+                    infoWinLoss(opponent.name + " LOSE! Điểm: " + ((Human_Player) opponent).getScore(), false);
+                }
+            } else {
+                // Người thắng người → thắng +3, thua -1
+                ((Human_Player) currentPlayer).addScore(3);
+                ((Human_Player) opponent).addScore(-1);
+                infoWinLoss(currentPlayer.name + " WIN! Điểm: " + ((Human_Player) currentPlayer).getScore(), true);
+            }
+            startGameWithDelay();
+        }
+
+        if (draw) {
+            if (vsAI) {
+                // Hòa với AI → chỉ người chơi được +1
+                if (!currentPlayer.equals(aI_Player)) {
+                    ((Human_Player) currentPlayer).addScore(1);
+                    infoWinLoss("Hòa! Điểm: " + ((Human_Player) currentPlayer).getScore(), false);
+                } else if (opponent instanceof Human_Player) {
+                    ((Human_Player) opponent).addScore(1);
+                    infoWinLoss("Hòa! Điểm: " + ((Human_Player) opponent).getScore(), false);
+                }
+            } else {
+                // Hòa người với người → cả hai +1
+                ((Human_Player) currentPlayer).addScore(1);
+                ((Human_Player) opponent).addScore(1);
+                infoWinLoss("Hòa! " + currentPlayer.name + ": " + ((Human_Player) currentPlayer).getScore() +
+                        " | " + opponent.name + ": " + ((Human_Player) opponent).getScore(), false);
+            }
+            startGameWithDelay();
+        }
+    }
+
+
+    // Hàm lấy đối thủ
+    private Player getOpponent(Player p) {
+        return (p == player1) ? currentPlayerAI0rHuman : player1;
+    }
+
 
     private void playAI() {
         aI_Player.updateBoard(board);
@@ -138,7 +208,6 @@ public class PlayerAcitivity extends AppCompatActivity {
 
     private void startGameWithDelay() {
         disableAllButtons();
-
         startGame();
         updateCurrentPlayerUI();
     }
@@ -147,21 +216,9 @@ public class PlayerAcitivity extends AppCompatActivity {
         board = createBoard();
         aI_Player.updateBoard(board);
         currentPlayer = player1;
-        player1.setWinner(false);
-        player1.setDraw(false);
-        aI_Player.setWinner(false);
-        aI_Player.setDraw(false);
-//        clearAllButtons();
+
     }
 
-    private void clearAllButtons() {
-        for (ImageButton[] row : buttons) {
-            for (ImageButton btn : row) {
-                btn.setImageDrawable(null);
-                btn.setEnabled(true);
-            }
-        }
-    }
 
     private void disableAllButtons() {
         for (ImageButton[] row : buttons)
@@ -174,7 +231,6 @@ public class PlayerAcitivity extends AppCompatActivity {
         if (resId != 0) {
             btn.setImageDrawable(ContextCompat.getDrawable(this, resId));
             btn.setEnabled(false);
-            assert viewBinding.ivPlayer != null;
             viewBinding.ivPlayer.setImageDrawable(ContextCompat.getDrawable(this, resId));
             viewBinding.tvPlayer.setText(player.name);
         }
@@ -193,7 +249,6 @@ public class PlayerAcitivity extends AppCompatActivity {
         viewBinding.tvPlayer1.setAlpha(1f);
         viewBinding.ivPlayer2.setAlpha(0.5f);
         viewBinding.tvPlayer2.setAlpha(0.5f);
-        assert viewBinding.ivPlayer != null;
         viewBinding.ivPlayer.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.x));
         viewBinding.tvPlayer.setText(player1.name);
     }
