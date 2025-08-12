@@ -7,11 +7,13 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.example.tic_tac_toe.databinding.ActivityPlayerBinding;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class PlayerAcitivity extends AppCompatActivity {
@@ -19,6 +21,8 @@ public class PlayerAcitivity extends AppCompatActivity {
     ActivityPlayerBinding viewBinding;
 
     final int M = 3, N = 3;
+
+    ArrayList<String> boardData;
     char[][] board;
 
     Human_Player player1, player2;
@@ -95,7 +99,6 @@ public class PlayerAcitivity extends AppCompatActivity {
 
     private void onClickPausedGame() {
         viewBinding.btPaused.setOnClickListener(v -> {
-            assert viewBinding.pausedActivity != null;
             viewBinding.pausedActivity.setVisibility(View.VISIBLE);
             disableAllButtons();
             viewBinding.pausedActivity.onClickContinue(viewBinding);
@@ -269,9 +272,84 @@ public class PlayerAcitivity extends AppCompatActivity {
     }
 
     private void infoWinLoss(String text, boolean isWin) {
-        assert viewBinding.winlostActivity != null;
         viewBinding.winlostActivity.setVisibility(View.VISIBLE);
         viewBinding.winlostActivity.setResult(text, isWin);
         viewBinding.winlostActivity.startNewGame(viewBinding);
     }
+
+    // lưu trữ dữ liệu  khi Activity bị tạm dừng hoặc bị đóng
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // Lưu trữ dữ liệu mảng 2 chiều board vào Bundle
+        boardData = new ArrayList<>();
+        for (char[] row : board) {
+            for (char cell : row) {
+                boardData.add(String.valueOf(cell));
+            }
+        }
+        outState.putStringArrayList("board_data", boardData);
+        // Lưu lượt chơi hiện tại
+        outState.putChar("current_symbol", currentPlayer.symbol);
+        // Lưu alpha
+        outState.putFloat("player1_alpha", viewBinding.ivPlayer1.getAlpha());
+        outState.putFloat("player2_alpha", viewBinding.ivPlayer2.getAlpha());
+
+        // Lưu mode chơi
+        outState.putInt("mode", getIntent().getIntExtra("mode", 0));
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Lấy dữ liệu đã lưu
+        ArrayList<String> data = savedInstanceState.getStringArrayList("board_data");
+        char currentSymbol = savedInstanceState.getChar("current_symbol", 'x');
+        int mode = savedInstanceState.getInt("mode", 0);
+
+        // Khởi tạo lại chế độ chơi
+        setUpMode(mode);
+
+        // Khởi tạo bàn cờ nếu null
+        if (board == null) {
+            board = createBoard();
+        }
+
+        // Vẽ lại bàn cờ
+        if (data != null) {
+            for (int i = 0; i < M; i++) {
+                for (int j = 0; j < N; j++) {
+                    int index = i * N + j;
+                    board[i][j] = data.get(index).charAt(0);
+
+                    // Nếu ô này đã có ký hiệu → vẽ lại đúng hình
+                    if (board[i][j] != ' ') {
+                        int resId = getResources().getIdentifier(
+                                String.valueOf(board[i][j]),
+                                "drawable",
+                                getPackageName()
+                        );
+                        buttons[i][j].setImageDrawable(ContextCompat.getDrawable(this, resId));
+                        buttons[i][j].setEnabled(false);
+                    }
+                }
+            }
+        }
+
+        // Khôi phục lượt chơi
+        currentPlayer = (currentSymbol == player1.symbol) ? player1 : currentPlayerAI0rHuman;
+
+        // Khôi phục alpha
+        float p1Alpha = savedInstanceState.getFloat("player1_alpha", 1.0f);
+        float p2Alpha = savedInstanceState.getFloat("player2_alpha", 1.0f);
+
+        viewBinding.ivPlayer1.setAlpha(p1Alpha);
+        viewBinding.ivPlayer2.setAlpha(p2Alpha);
+    }
+
 }
+
+
+
