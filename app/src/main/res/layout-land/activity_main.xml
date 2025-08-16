@@ -116,7 +116,7 @@
         android:background="@drawable/btn_sin"
         android:fontFamily="@font/dmsans"
         android:gravity="center"
-        android:text="Single Player"
+        android:text="Play With A Friend"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
